@@ -1,26 +1,16 @@
-// Given a valid (IPv4) IP address, return a defanged version of that IP address.
+// Write a function caled binarySearch which accepts a sorted array and a value and returns the index at which the value exists. Otherwise return -1;
 
-// A defanged IP address replaces every period "." with "[.]".
-
- 
-
-// Example 1:
-
-// Input: address = "1.1.1.1"
-// Output: "1[.]1[.]1[.]1"
-// Example 2:
-
-// Input: address = "255.100.50.0"
-// Output: "255[.]100[.]50[.]0"
- 
-
-// Constraints:
-
-// The given address is a valid IPv4 address.
-
-const defangIPaddr = (string) => {
-    let newString = string.split();
-    console.log(newString);
+function binarySearch(arr, value) {
+    let start = 0;
+    let end = arr.length - 1;
+    let middle = Math.floor((start + end) / 2);
+    
+    while (arr[middle] !== value && start <= end) {
+        value < arr[middle] ? end = middle - 1 : start = middle + 1;
+        middle = Math.floor((start + end )/ 2);
+    }
+    
+    return arr[middle] === value ? middle : -1;
 }
 
-defangIPaddr("255.100.50.0") 
+console.log(binarySearch([1, 2, 3, 4, 10, 15, 22, 25], 25));
