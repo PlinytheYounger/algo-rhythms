@@ -229,13 +229,13 @@ const mergeSort = (arr) => {
 //**************** DOUBLY LINKED LISTS ************************ */
 //************************************************************ */
 
-class Node{
-    constructor(val){
-        this.val = val;
-        this.head = null;
-        this.tail = null;
-    }
-}
+// class Node{
+//     constructor(val){
+//         this.val = val;
+//         this.head = null;
+//         this.tail = null;
+//     }
+// }
 
 class DoublyLinkedList{
     constructor() {
@@ -310,12 +310,12 @@ class DoublyLinkedList{
 
 
 var cutOffTree = function(forest) {
-    class Node{
-        constructor(val){
-            this.val = val;
-            this.next = null;
-        }
-    }
+    // class Node{
+    //     constructor(val){
+    //         this.val = val;
+    //         this.next = null;
+    //     }
+    // }
 
     class SinglyLinkedList{
         constructor(){
@@ -359,3 +359,334 @@ var cutOffTree = function(forest) {
 
 // Queues
 
+class QNode {
+    consructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+class Queue {
+    constructor(){
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+    enqueue(val) {
+        var newNode = new Node(val);
+        if(!this.first) {
+            this.first = newNode;
+            this.last = newNode;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+        return this.size++;
+    }
+    dequeue() {
+        if(!this.first) return null;
+        var temp = this.first;
+        if(this.first === this.last) {
+            this.last = null;
+        }
+        this.first = this.first.next;
+        this.size--;
+        return temp.value;
+    }
+}
+
+// var Q = new Queue();
+// Q.enqueue("First");
+// Q.enqueue("Second")
+// console.log(Q);
+// Q.dequeue()
+// console.log(Q);
+
+// Binary Search Trees / Trees
+
+class TNode {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BST {
+    constructor() {
+        this.root = null;
+    }
+    insert(val) {
+        var newNode = new TNode(val);
+        if(this.root === null) {
+            this.root = newNode;
+            return this;
+        } else {
+            var current = this.root;
+            while(true) {
+                if(val === current.value) return undefined;
+                if(val < current.value) {
+                    if(current.left === null) {
+                        current.left = newNode;
+                        return this;
+                    } current = current.left;
+                } else {
+                    if(current.right === null) {
+                        current.right = newNode;
+                        return this;
+                    } current = current.right;
+                }
+            }
+        }
+        
+    }
+    find(val) {
+        if(this.root === null) {
+            return false;
+        } 
+        var current = this.root,
+            found = false;
+        while(current && !found) {
+            if(val === current.value) {
+                found = true;
+            };
+            if(val < current.value) {
+                current = current.left;
+            } else if(val > current.value){
+                if(current.right === null) {
+                    current = current.right;
+                } 
+            } else {
+                found = true;
+            }
+        }
+        if(!found) return undefined;
+        return current;
+    }
+    BFS() {
+        var node = this.root,
+            data = [],
+            queue = [];
+        queue.push(node);
+
+        while(queue.length) {
+            node = queue.shift(); 
+            data.push(node.value);
+            if(node.left) queue.push(node.left);
+            if(node.right) queue.push(node.right);
+        }
+        return data;
+    }
+    DFSPreOrder() {
+        var current = this.root,
+            data = [];
+        const traverse = (node) => {
+            data.push(node.value);
+            if(node.left) traverse(node.left);
+            if(node.right) traverse(node.right);
+        }
+        traverse(current);
+        return data;
+    }
+    DFSPostOrder() {
+        var current = this.root,
+            data = [];
+        const traverse = (node) => {
+            if(node.left) traverse(node.left);
+            if(node.right) traverse(node.right);
+            data.push(node.value)
+        }
+        traverse(current);
+        return data;
+    }
+
+    DFSInOrder() {
+        var current = this.root,
+            data = [];
+        const traverse = (node) => {
+            if(node.left) traverse(node.left);
+            data.push(node.value)
+            if(node.right) traverse(node.right);
+        }
+        traverse(current);
+        return data;
+    }
+
+}
+
+// var tree = new BST();
+// tree.root = new TNode(10);
+// tree.root.right = new TNode(15);
+// tree.root.left = new TNode(7);
+// console.log(tree);
+// tree.insert(11);
+// tree.insert(17);
+// tree.insert(2);
+// console.log(tree.BFS());
+// console.log(tree.DFSPreOrder());
+// console.log(tree.DFSPostOrder());
+// console.log(tree.DFSInOrder());
+
+/* ######################## */
+/* ######################## */
+/* ######################## */
+// HEAPS // 
+/* ######################## */
+/* ######################## */
+/* ######################## */
+
+class MaxBinaryHeap {
+    constructor() {
+        this.values = [41,39,33,18,27,12]
+    }
+
+    insert(value) {
+        this.values.push(value);
+        this.bubbleUp();
+    }
+
+    bubbleUp() {
+        let index = this.values.length - 1;
+        let element = this.values[index]
+        while(index > 0) {
+            let parentIndex = Math.floor((index-1)/2);
+            let parent = this.values[parentIndex];
+            if(element <= parent) break;
+            this.values[parentIndex] = element;
+            this.values[index] = parent;
+            index = parentIndex;
+        }
+        
+    }
+}
+
+// let heap = new MaxBinaryHeap();
+// heap.insert(55);
+// heap.insert(3);
+// heap.insert(199);
+// console.log(heap.values);
+
+
+class Node {
+    constructor(value, priority) {
+        this.value = value;
+        this.priority = priority;
+    }
+}
+
+class PriorityQueue {
+    constructor() {
+        this.values = [];
+    }
+
+    enqueue(val, priority){
+        let newNode = new Node(val, priority);
+        this.values.push(newNode);
+        this.bubbleUp();
+    }
+    bubbleUp(){
+        let idx = this.values.length - 1;
+        const element = this.values[idx];
+        while(idx > 0){
+            let parentIdx = Math.floor((idx - 1)/2);
+            let parent = this.values[parentIdx];
+            if(element.priority >= parent.priority) break;
+            this.values[parentIdx] = element;
+            this.values[idx] = parent;
+            idx = parentIdx;
+        }
+    }
+    dequeue(){
+        const min = this.values[0];
+        const end = this.values.pop();
+        if(this.values.length > 0){
+            this.values[0] = end;
+            this.sinkDown();
+        }
+        return min;
+    }
+    sinkDown(){
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+        while(true){
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild,rightChild;
+            let swap = null;
+
+            if(leftChildIdx < length){
+                leftChild = this.values[leftChildIdx];
+                if(leftChild.priority < element.priority) {
+                    swap = leftChildIdx;
+                }
+            }
+            if(rightChildIdx < length){
+                rightChild = this.values[rightChildIdx];
+                if(
+                    (swap === null && rightChild.priority < element.priority) || 
+                    (swap !== null && rightChild.priority < leftChild.priority)
+                ) {
+                   swap = rightChildIdx;
+                }
+            }
+            if(swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
+    }
+}
+
+let ER = new PriorityQueue();
+ER.enqueue("common cold",5)
+ER.enqueue("gunshot wound", 1)
+ER.enqueue("high fever",4)
+ER.enqueue("broken arm",2)
+ER.enqueue("glass in foot",3)
+// console.log(ER)
+// ER.dequeue();
+// console.log(ER)
+
+
+//***************** ******************/
+//***************** ALGORITHM PRACTICE ******************/
+//***************** ******************/
+
+
+// Given a string, find the length of the longest substring in it with no more than K distinct characters.
+
+// Example 1:
+
+// Input: String="araaci", K=2
+// Output: 4
+// Explanation: The longest substring with no more than '2' distinct characters is "araa".
+
+const longest_substring_with_k_distinct = function(str, k) {
+    let start = 0;
+    let maxLength = 0;
+    let hashTable = {};
+  
+    for(let end = 0; end < str.length; end++) {
+      let windowEnd = str[end];
+      if(!(hashTable[windowEnd])) {
+        hashTable[windowEnd] = 0;
+      }
+      hashTable[windowEnd] += 1;
+  
+      while(Object.keys(hashTable).length > 2) {
+        let windowStart = str[start];
+        hashTable[windowStart] -= 1;
+        if(hashTable[windowStart] === 0) {
+          delete hashTable[windowStart];
+        }
+        start++;
+      }
+  
+      maxLength = Math.max(maxLength, end - start + 1);
+    }
+  
+    return maxLength; // return max length of smallest substring
+  };
+
+  console.log(longest_substring_with_k_distinct('aarrrrci', 2));
